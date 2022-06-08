@@ -1,0 +1,8 @@
+[run]
+omit =
+    */__init__.py
+    */test/*
+
+[report]
+exclude_lines = 
+    @abstractmethod
