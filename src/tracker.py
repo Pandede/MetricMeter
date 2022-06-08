@@ -29,6 +29,21 @@ class Tracker(ABC):
         return self.count
 
 
+class DummyTracker(Tracker):
+    def __init__(self):
+        super(DummyTracker, self).__init__()
+
+    def append(self, value: Union[int, float]):
+        self.value = value
+        self.count += 1
+
+    def clear(self):
+        self.value = None
+
+    def latest(self) -> float:
+        return self.value
+
+
 class AverageTracker(Tracker):
     def __init__(self):
         super(AverageTracker, self).__init__()
@@ -72,15 +87,16 @@ class VarTracker(Tracker):
     def clear(self):
         self.mean = 0.
         self.var = 0.
-    
+
     def latest(self) -> float:
         if self.count > 1:
             return self.var / self.count
         return 0.0
 
+
 class StdTracker(VarTracker):
     def __init__(self):
         super(StdTracker, self).__init__()
-    
+
     def latest(self) -> float:
         return sqrt(super().latest())
